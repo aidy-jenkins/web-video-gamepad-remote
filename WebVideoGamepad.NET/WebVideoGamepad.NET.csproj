@@ -7,7 +7,7 @@
     <ProjectGuid>{3452B365-F11F-48E6-AD9C-EF43D6D86ED1}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>WebAppHost.NetFramework</RootNamespace>
-    <AssemblyName>WebAppHost.NetFramework</AssemblyName>
+    <AssemblyName>WebVideoGamepad.NET</AssemblyName>
     <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebAppHost.NetFramework", "WebAppHost.NetFramework\WebAppHost.NetFramework.csproj", "{3452B365-F11F-48E6-AD9C-EF43D6D86ED1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebVideoGamepad.NET", "WebVideoGamepad.NET\WebVideoGamepad.NET.csproj", "{3452B365-F11F-48E6-AD9C-EF43D6D86ED1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
