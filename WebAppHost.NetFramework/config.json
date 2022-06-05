@@ -1,6 +1,6 @@
 {
   "frame": {
-    "fullscreen": false
+    "fullscreen": true
   },
   "app": {
     "url": "https://www.youtube.com/tv#",
