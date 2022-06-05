@@ -8,3 +8,13 @@ Also by loading the Smart TV version of these sites, this enables casting from y
 
 
 Works by running a browser instance (Gecko) and mapping controller inputs to key presses
+
+
+You can set configuration such as the URL to load, control stick dead zone etc. in the config.json
+Alternatively, you can provide the following paramaters as command line args (which takes precedence over the config file)
+
+|Name|Value|Description|
+|--- | --- |---|
+|-url|`<string>`|The URL to load in the player
+|-useragent|`<string>`|The user agent to use when loading the page (e.g. that of a smart tv/stick)
+|--fullscreen|`<none>`|If present, loads the app in full screen mode
