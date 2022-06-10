@@ -24,6 +24,7 @@ namespace WebAppHost.NetFramework
     {
         public string Url { get; set; }
         public string UserAgent { get; set; }
+        public string InjectScript { get; set; }
     }
 
     

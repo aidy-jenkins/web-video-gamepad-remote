@@ -32,6 +32,15 @@ namespace WebAppHost.NetFramework
             GeckoPreferences.User["general.useragent.override"] = appConfig.UserAgent;
             browser.Navigate(appConfig.Url);
 
+            if (!string.IsNullOrEmpty(appConfig.InjectScript))
+            {
+                browser.Navigated += (o, e) =>
+                {
+                    using (var context = new AutoJSContext(browser.Window))
+                        context.EvaluateScript(appConfig.InjectScript);
+                };
+            }
+
             _ = Task.Run(CheckStateLoop);
         }
 
