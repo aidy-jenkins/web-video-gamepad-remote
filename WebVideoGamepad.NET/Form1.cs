@@ -33,6 +33,15 @@ namespace WebAppHost.NetFramework
             GeckoPreferences.User["dom.max_script_run_time"] = 0;
             browser.Navigate(appConfig.Url);
 
+            if (!string.IsNullOrEmpty(appConfig.InjectScript))
+            {
+                browser.Navigated += (o, e) =>
+                {
+                    using (var context = new AutoJSContext(browser.Window))
+                        context.EvaluateScript(appConfig.InjectScript);
+                };
+            }
+
             _ = Task.Run(CheckStateLoop);
         }
 

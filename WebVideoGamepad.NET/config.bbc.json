@@ -4,7 +4,8 @@
   },
   "app": {
     "url": "https://www.bbc.co.uk/iplayer",
-    "userAgent": "smarttv_AFTS_Build_565189620_Chromium_34.0.1847.114"
+    "userAgent": "smarttv_AFTS_Build_565189620_Chromium_34.0.1847.114",
+    "injectScript": "(function() {const oldAppend = HTMLElement.prototype.appendChild;HTMLElement.prototype.appendChild = function(...args) {let elem = args[0];if(elem instanceof HTMLScriptElement && elem.src.includes('securegate'))elem.src = elem.src.replace('securegate.iplayer.bbc.co.uk', 'open.live.bbc.co.uk');return oldAppend.call(this, ...args);};})();"
   },
   "controller": {
     "axisMaxValue": 65534,
