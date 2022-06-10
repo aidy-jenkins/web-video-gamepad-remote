@@ -30,6 +30,7 @@ namespace WebAppHost.NetFramework
             var appConfig = Config.Instance.App;
 
             GeckoPreferences.User["general.useragent.override"] = appConfig.UserAgent;
+            GeckoPreferences.User["dom.max_script_run_time"] = 0;
             browser.Navigate(appConfig.Url);
 
             _ = Task.Run(CheckStateLoop);
