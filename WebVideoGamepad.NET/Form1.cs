@@ -33,6 +33,21 @@ namespace WebAppHost.NetFramework
             GeckoPreferences.User["dom.max_script_run_time"] = 0;
             browser.Navigate(appConfig.Url);
 
+            browser.AddMessageEventListener("close", x => this.Close());
+
+            browser.Navigated += (o, e) =>
+            {
+                using (var context = new AutoJSContext(browser.Window))
+                    context.EvaluateScript(@"
+                    (function() {
+                        window.close = function() {
+                            let event = new MessageEvent('close', { 'view': window, 'bubbles': false, 'cancelable': false, 'data': '' });
+                            document.dispatchEvent(event);
+                        };
+                    })();
+                    ");
+            };
+
             if (!string.IsNullOrEmpty(appConfig.InjectScript))
             {
                 browser.Navigated += (o, e) =>
@@ -70,6 +85,7 @@ namespace WebAppHost.NetFramework
                 {
                     ButtonState.A => ("Enter", 13),
                     ButtonState.B => ("Escape", 27),
+                    ButtonState.X => ("x", 88), 
                     ButtonState.Y => ("Exit", -1),
                     _ => (string.Empty, 0)
                 };
