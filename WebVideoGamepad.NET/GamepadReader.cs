@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace WebAppHost.NetFramework
@@ -36,25 +36,42 @@ namespace WebAppHost.NetFramework
             _controllerConfig = config;
             _axisNeutralPoint = config.AxisMaxValue / 2;
             _input = new DirectInput();
-            var devices = _input.GetDevices(DeviceType.Gamepad, DeviceEnumerationFlags.AttachedOnly);
 
-            _joysticks = devices.Select(device => new Joystick(_input, device.InstanceGuid)).ToArray();
+            _ = Task.Run(CheckForControllerChanges);
+        }
 
-            foreach (var joystick in _joysticks)
+        public void CheckForControllerChanges()
+        {
+            while (true)
             {
-                joystick.Acquire();
+                var devices = _input.GetDevices(DeviceType.Gamepad, DeviceEnumerationFlags.AttachedOnly);
+
+                _joysticks = devices.Select(device => new Joystick(_input, device.InstanceGuid)).ToArray();
+
+                foreach (var joystick in _joysticks)
+                {
+                    joystick.Acquire();
+                }
+
+                Thread.Sleep(5000);
             }
         }
 
         public (DirectionState, ButtonState) ReadState()
         {
-            try
-            {
-                DirectionState directionState = default;
-                ButtonState buttonState = default;
+            DirectionState directionState = default;
+            ButtonState buttonState = default;
 
-                foreach (var joystick in _joysticks)
+            var joysticks = _joysticks;
+
+            if (joysticks == null)
+                return default;
+
+            foreach (var joystick in joysticks)
+            {
+                try
                 {
+
                     joystick.Poll();
                     var state = joystick.GetCurrentState();
 
@@ -65,13 +82,10 @@ namespace WebAppHost.NetFramework
                     foreach (var button in pressedButtons)
                         buttonState |= ReadButtonState(button);
                 }
+                catch { /* do nothing */ }
+            }
 
-                return (directionState, buttonState);
-            }
-            catch (Exception ex) 
-            {
-                throw new Exception("Failed to read controller state", ex);
-            }
+            return (directionState, buttonState);
         }
 
         private static ButtonState ReadButtonState((bool pressed, int index) button)
