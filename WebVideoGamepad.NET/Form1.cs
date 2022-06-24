@@ -22,6 +22,10 @@ namespace WebAppHost.NetFramework
             var frameConfig = Config.Instance.Frame;
             if (frameConfig.Fullscreen)
             {
+                this.Deactivate += (o, e) => this.TopMost = false;
+                this.Activated += (o, e) => this.TopMost = true;
+
+                this.Focus();
                 this.TopMost = true;
                 this.FormBorderStyle = FormBorderStyle.None;
                 this.WindowState = FormWindowState.Maximized;
